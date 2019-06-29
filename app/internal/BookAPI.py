@@ -1,6 +1,6 @@
 import json
 from flask_restful import Resource, reqparse
-from flask import (request, jsonify)
+from flask import (request, jsonify, abort)
 from app.helpers.services import non_empty_string, non_empty_integer, non_empty_list, check_date_format
 from datetime import datetime
 from app.models.books import Books
@@ -86,15 +86,17 @@ class BookAPI(Resource):
             if 'name' in data:
                 name = data['name']
                 books = Books.query.filter_by(name=name).all()
-            if 'country' in data:
+            elif 'country' in data:
                 country = data['country']
                 books = Books.query.filter_by(country=country).all()
-            if 'publisher' in data:
+            elif 'publisher' in data:
                 publisher = data['publisher']
                 books = Books.query.filter_by(publisher=publisher).all()
-            if 'year' in data:
+            elif 'year' in data:
                 year = data['year']
                 books = Books.query.filter(extract('year', Books.release_date) == year).all()
+            else:
+                return jsonify({'status_code': 400})
         except:
             books = Books.query.all()
 
