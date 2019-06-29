@@ -12,9 +12,9 @@ db = SQLAlchemy(app)
 from flask_restful import Api
 from app.internal.BookAPI import BookAPI
 from app.internal.UpdateBookAPI import UpdateBookAPI
-from app.external.views import external_blueprint
+from app.external.ExternalAPI import ExternalAPI
 api = Api(app)
 
-app.register_blueprint(external.views.external_blueprint)
+api.add_resource(ExternalAPI, '/api/external-books')
 api.add_resource(BookAPI, '/api/v1/books')
 api.add_resource(UpdateBookAPI, '/api/v1/books/<int:id>')
