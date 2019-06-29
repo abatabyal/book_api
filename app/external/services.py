@@ -4,8 +4,13 @@ from datetime import datetime
 
 def get_external_book_info(book_name):
 
+    """
+    :param book_name: accepts book name to search in Ice And Fire API
+    :return: Parses the response as prescribed in assignment
+    """
+    #URL to be Called
     api_url = BOOK_URL + '?=' + book_name
-
+    #Ice and Fire API Call
     api_response = requests.get(api_url)
     print(api_response.text)
     response = {}
@@ -24,6 +29,7 @@ def get_external_book_info(book_name):
             book_data["number_of_pages"] = json_api_response[0]["numberOfPages"]
             book_data["publisher"] = json_api_response[0]["publisher"]
             book_data["country"] = json_api_response[0]["country"]
+            #Date is extracted from TimeStamp
             release_date = datetime.strptime(json_api_response[0]["released"], "%Y-%m-%dT%H:%M:%S").date()
             book_data["release_date"] = str(release_date)
             data_list.append(book_data)
