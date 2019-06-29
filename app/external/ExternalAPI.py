@@ -6,6 +6,10 @@ from app.helpers.services import non_empty_string
 class ExternalAPI(Resource):
 
     def get(self):
+        """ REST Call GET Method to search Ice and Fire API
+
+        :return: response with all the book details to the api call source
+        """
 
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name", type=non_empty_string, required=True, help='Name cannot be Empty',
