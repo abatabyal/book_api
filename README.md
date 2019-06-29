@@ -8,8 +8,11 @@ Ubuntu 16.04, Python 3.7, MySQL 8.0
 
 2. create the virtual environment and install requirements using:
     python3 -m venv venv
+    
     source venv/bin/activate
+    
     pip install -r requirements.txt
+    
     python3 run.py 
     
 3. The unit tests are under /app/tests. 
