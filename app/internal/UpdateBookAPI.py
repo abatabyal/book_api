@@ -10,6 +10,18 @@ from sqlalchemy import extract
 class UpdateBookAPI(Resource):
 
     def patch(self, id):
+        """
+        Updates book information by id. Name, isbn, authors, country, number of pages,
+        publisher or release date. The input is sent in form data.
+        :param id: integer
+        @name: string
+        @isbn: string
+        @authors: list of string
+        @country: string
+        @number_of_pages: integer
+        @release_date: 'YYYY-MM-DD'
+        :return: status code 200 on successful updation of a book record in database
+        """
         print("Updating Book: " + str(id))
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name", type=non_empty_string, help='Name cannot be Empty', location='form')
@@ -85,6 +97,11 @@ class UpdateBookAPI(Resource):
             abort(400)
 
     def delete(self, id):
+        """
+        Deletes a book by id. The id is sent in args.
+        :param id: integer
+        :return: status code 200 on successful deletion of a book from database
+        """
         print("Deleting Book: " + str(id))
         delete_book = Books.query.filter_by(id=id).first()
         name = ''
@@ -108,6 +125,11 @@ class UpdateBookAPI(Resource):
             return jsonify({"message": "Book with id: " + str(id) + " does not exist"})
 
     def get(self, id):
+        """
+        Finds a book by id.
+        :param id: integer
+        :return: status code 200 on successful finding the book from database
+        """
         print("Fetching Book: " + str(id))
         get_book = Books.query.filter_by(id=id).first()
         if get_book:

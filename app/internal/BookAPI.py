@@ -10,6 +10,16 @@ from sqlalchemy import extract
 class BookAPI(Resource):
 
     def post(self):
+        """Takes input in form of json
+        @name: string
+        @isbn: string
+        @authors: list of string
+        @country: string
+        @number of pages: integer
+        @publisher: string
+        @release date: 'YYYY-MM-DD'
+        :return: status code 201 on successful creation of a book record in database
+        """
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name", type=non_empty_string, required=True, help='Name cannot be Empty',
                                  location='json')
@@ -61,6 +71,14 @@ class BookAPI(Resource):
         return jsonify(response_dict)
 
     def get(self):
+        """search a book by name, country, publisher or year. Input is in json format.
+        If no input is there, it will return all the lists of books
+        @name: string
+        @country: string
+        @publisher: string
+        @year: integer
+        :return: status code 200 on successful creation of a book record in database
+        """
         print("Get Method")
         books = None
         try:
