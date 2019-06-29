@@ -140,5 +140,5 @@ class TestInternalUpdates(TestCase):
 
     # delete book positive
     def test_delete_book_positive(self):
-       response = self.client.delete(path='/api/v1/books/36')
+       response = self.client.delete(path='/api/v1/books/37')
        self.assertEqual(response.json['status_code'], 200)
