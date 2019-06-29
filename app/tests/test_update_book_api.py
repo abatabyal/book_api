@@ -133,6 +133,11 @@ class TestInternalUpdates(TestCase):
        response = self.client.get(path='/api/v1/books/189')
        self.assertEqual(response.status_code, 404)
 
+    # delete book not exist
+    def test_delete_book_not_exist(self):
+       response = self.client.delete(path='/api/v1/books/189')
+       self.assertEqual(response.status_code, 404)
+
     # delete book negative without id
     def test_delete_book_negative(self):
        response = self.client.delete(path='/api/v1/books/')
@@ -145,5 +150,5 @@ class TestInternalUpdates(TestCase):
 
     # delete book positive
     def test_delete_book_positive(self):
-       response = self.client.delete(path='/api/v1/books/37')
+       response = self.client.delete(path='/api/v1/books/43')
        self.assertEqual(response.json['status_code'], 200)

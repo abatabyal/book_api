@@ -107,22 +107,17 @@ class UpdateBookAPI(Resource):
         name = ''
         if delete_book:
             name = delete_book.name
-            try:
-                db.session.delete(delete_book)
-                db.session.commit()
-                response_dict = {}
-                data_list = []
-                response_dict["data"] = data_list
-                response_dict["status_code"] = 200
-                response_dict["status"] = "success"
-                response_dict["message"] = "The book " + name + " was deleted successfully"
-                return jsonify(response_dict)
-            except:
-                db.session.rollback()
-                db.session.remove()
-                return jsonify({"message": "Something went wrong while updating. Please try again."})
+            db.session.delete(delete_book)
+            db.session.commit()
+            response_dict = {}
+            data_list = []
+            response_dict["data"] = data_list
+            response_dict["status_code"] = 200
+            response_dict["status"] = "success"
+            response_dict["message"] = "The book " + name + " was deleted successfully"
+            return jsonify(response_dict)
         else:
-            return jsonify({"message": "Book with id: " + str(id) + " does not exist"})
+            abort(404)
 
     def get(self, id):
         """
