@@ -6,6 +6,10 @@ from app.models.books import Books
 from app import db
 
 def populate_db():
+    """
+    Standaone utility to populate database from Ice And Fire API for testing
+    :return: inserts records to database
+    """
 
     api_url = BOOK_URL
 
@@ -26,4 +30,5 @@ def populate_db():
             datetime.now())
             db.session.add(book_insert)
             db.session.commit()
+
 populate_db()
