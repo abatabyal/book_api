@@ -6,7 +6,7 @@ def non_empty_string(s):
     return s
 
 def non_empty_integer(s):
-    if not s:
+    if int(s) <= 0:
         raise ValueError("Must not be empty integer")
     return s
 
