@@ -68,6 +68,11 @@ class TestInternalUpdates(TestCase):
        response = self.client.patch(path='/api/v1/books/22', data=dict(release_date = ''))
        self.assertEqual(response.status_code, 400)
 
+    # update book negative by wrong parameter
+    def test_update_negative_empty_release_date(self):
+       response = self.client.patch(path='/api/v1/books/22', data=dict(id = 1))
+       self.assertEqual(response.status_code, 400)
+
     # update book by name
     def test_update_name(self):
        response = self.client.patch(path='/api/v1/books/22', data=dict(name = "The Adventures of Sherlock Holmes"))
