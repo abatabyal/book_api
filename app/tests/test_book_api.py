@@ -95,7 +95,7 @@ class TestInternal(TestCase):
         self.assertEqual(response.json['status_code'], 200)
 
     # negative testing get book list by isbn not allowed
-    def test_get_book_year(self):
+    def test_get_book_isbn(self):
         response = self.client.get(path='/api/v1/books', data=json.dumps({"isbn": "123456789"}),
                                    content_type='application/json')
         self.assertEqual(response.json['status_code'], 400)
