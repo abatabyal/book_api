@@ -1,6 +1,6 @@
 import json
 from flask_restful import Resource, reqparse
-from flask import (request, jsonify)
+from flask import (request, jsonify, abort)
 from app.helpers.services import non_empty_string, non_empty_integer, non_empty_list, check_date_format
 from datetime import datetime
 from app.models.books import Books
@@ -14,7 +14,7 @@ class UpdateBookAPI(Resource):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name", type=non_empty_string, help='Name cannot be Empty', location='form')
         self.parser.add_argument('isbn', type=non_empty_string, help='ISBN cannot be Empty', location='form')
-        self.parser.add_argument('authors', type=non_empty_list, help='Authors cannot be Empty', location='form')
+        self.parser.add_argument('authors', type=non_empty_list, help='Authors cannot be Empty', action='append', location='form')
         self.parser.add_argument('country', type=non_empty_string, help='Country cannot be Empty', location='form')
         self.parser.add_argument('number_of_pages', type=non_empty_integer, help='Number of pages cannot be Empty',
                                  location='form')
@@ -34,18 +34,25 @@ class UpdateBookAPI(Resource):
 
         if name:
             update_book.name = name
+            update_book.updated_at = datetime.now()
         if isbn:
             update_book.isbn = isbn
+            update_book.updated_at = datetime.now()
         if authors:
             update_book.authors = authors
+            update_book.updated_at = datetime.now()
         if country:
             update_book.country = country
+            update_book.updated_at = datetime.now()
         if number_of_pages:
             update_book.number_of_pages = number_of_pages
+            update_book.updated_at = datetime.now()
         if publisher:
             update_book.publisher = publisher
+            update_book.updated_at = datetime.now()
         if release_date:
             update_book.release_date = release_date
+            update_book.updated_at = datetime.now()
 
         if name or isbn or authors or country or number_of_pages or publisher or release_date:
             try:
@@ -75,7 +82,7 @@ class UpdateBookAPI(Resource):
 
             return jsonify(response_dict)
         else:
-            return jsonify({"message": "Empty Form Data"})
+            abort(400)
 
     def delete(self, id):
         print("Deleting Book: " + str(id))
@@ -122,4 +129,4 @@ class UpdateBookAPI(Resource):
             response_dict["status"] = "success"
             return jsonify(response_dict)
         else:
-            return jsonify({"message": "Book with id: " + str(id) + " does not exist"})
+            abort(404)
