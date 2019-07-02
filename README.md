@@ -22,4 +22,5 @@ venv/bin/nosetests --with-coverage --cover-package=app.internal --cover-package=
 --cover-inclusive app/tests/test_update_book_api.py app/tests/test_book_api.py app/tests/test_external_api.py 
 
 5. The HTML report is saved under the directory cover. It can be accessed by index.html.
+6 The url for the application is http://127.0.0.1:4000/
 
